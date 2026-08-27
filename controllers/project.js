@@ -91,15 +91,8 @@ const quickCreateProject = async (req, res) => {
 // PATCH /api/projects/:id - update project (rest of the info)
 const updateProject = async (req, res) => {
   const { id } = req.params;
-  const {
-    title,
-    description,
-    client,
-    role,
-    location,
-    projectDate,
-    sortOrder,
-  } = req.body;
+  const { title, description, client, role, location, projectDate, sortOrder } =
+    req.body;
 
   const existing = await prisma.project.findUnique({ where: { id } });
 
@@ -220,11 +213,7 @@ const uploadProjectImages = async (req, res) => {
   }
 
   const captionList =
-    captions && Array.isArray(captions)
-      ? captions
-      : captions
-        ? [captions]
-        : [];
+    captions && Array.isArray(captions) ? captions : captions ? [captions] : [];
   const columnsList =
     columns && Array.isArray(columns)
       ? columns.map(Number)

@@ -3,7 +3,13 @@ const path = require("path");
 const fs = require("fs");
 
 // Folder where project images are stored
-const projectImgDir = path.join(__dirname, "..", "public", "uploads", "projects");
+const projectImgDir = path.join(
+  __dirname,
+  "..",
+  "public",
+  "uploads",
+  "projects",
+);
 
 // Ensure the uploads directory exists
 fs.mkdirSync(projectImgDir, { recursive: true });
