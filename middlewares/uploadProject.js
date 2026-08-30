@@ -2,8 +2,8 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-// Folder where project images are stored
-const projectImgDir = path.join(
+// Base folder where project images are stored
+const projectImagesBase = path.join(
   __dirname,
   "..",
   "public",
@@ -11,13 +11,22 @@ const projectImgDir = path.join(
   "projects",
 );
 
-// Ensure the uploads directory exists
-fs.mkdirSync(projectImgDir, { recursive: true });
+// Resolve the destination folder for a request based on the project id
+const getProjectDir = (req) => {
+  const projectId = req.params.id;
+  if (!projectId) {
+    throw new Error("Project id is required for upload");
+  }
+  return path.join(projectImagesBase, projectId);
+};
 
 // Storage configuration
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, projectImgDir);
+    // Save into a dedicated folder named by the project id
+    const dir = getProjectDir(req);
+    fs.mkdirSync(dir, { recursive: true });
+    cb(null, dir);
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;

@@ -39,8 +39,9 @@ model Project {
     id          String  @id @default(cuid())
     title       String
     slug        String  @unique
-    description String?
+    description String? @db.Text
     mainImage   String?
+    category    String?
 
     client      String?
     role        String?

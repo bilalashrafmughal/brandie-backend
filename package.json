@@ -11,7 +11,10 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "start": "node server.js",
+    "prisma:sync": "prisma generate && prisma db push",
+    "start": "npm run prisma:sync && node server.js",
+    "build:client": "npm --prefix ../frontend run build",
+    "build": "npm run build:client",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev"
   },
